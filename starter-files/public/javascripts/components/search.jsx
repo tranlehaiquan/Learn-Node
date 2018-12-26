@@ -10,7 +10,7 @@ class Search extends React.Component {
     this.state = {
       keyword: '',
       stores: []
-    }
+    };
 
     this.getStore = debounce(this.getStore, 300);
   }
@@ -25,7 +25,7 @@ class Search extends React.Component {
         stores
       }));
     } catch(err) {
-      console.error(err);
+      alert('error you dumb!');
     }
   }
 
@@ -49,14 +49,14 @@ class Search extends React.Component {
           name="search"
         />
         <div className="search__results">
-        {
-          stores.map((store) => (
-            <SearchItem item={store} />
-          ))
-        }
+          {
+            stores.map((store) => (
+              <SearchItem key={store.slug} item={store} />
+            ))
+          }
         </div>
       </Fragment>
-    )
+    );
   }
 }
 
