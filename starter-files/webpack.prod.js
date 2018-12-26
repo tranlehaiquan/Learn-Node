@@ -5,6 +5,8 @@ const path = require('path');
 const webpack = require('webpack');
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 /*
   webpack sees every file as a module.
   How to handle those files is up to loaders.
@@ -22,7 +24,9 @@ const eslint = {
 const javascript = {
   test: /\.(js|jsx)$/,
   exclude: /node_modules/,
-  use: ["babel-loader", "eslint-loader"]
+  use: {
+    loader: "babel-loader"
+  }
 };
 
 /*
@@ -76,6 +80,7 @@ const config = {
   plugins: [
     // here is where we tell it to output our css to a separate file
     // new ExtractTextPlugin('style.css'),
+    new BundleAnalyzerPlugin()
   ]
 };
 // webpack is cranky about some packages using a soon to be deprecated API. shhhhhhh
