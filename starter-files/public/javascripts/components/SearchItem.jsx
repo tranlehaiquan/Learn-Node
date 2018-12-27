@@ -14,7 +14,7 @@ export default class SearchItem extends Component {
     const { item } = this.props;
 
     return (
-      <a href={`/stores/${item.slug}`} className="search__result">
+      <a href={`/store/${item.slug}`} className="search__result">
         <strong>{item.name}</strong>
       </a>
     );
