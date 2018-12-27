@@ -1,4 +1,9 @@
 module.exports = {
+    "settings": {
+        "react": {
+            "version": "16.7"
+        }
+    },
     "env": {
         "browser": true,
         "es6": true

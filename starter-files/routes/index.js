@@ -21,8 +21,8 @@ router.post('/add/:slug',
   storeController.upload,
   catchErrors(storeController.resize),
   catchErrors(storeController.updateStore))
-router.get('/stores/:slug', catchErrors(storeController.getStore))
-router.get('/stores/:slug/edit', 
+router.get('/store/:slug', catchErrors(storeController.getStore))
+router.get('/store/:slug/edit', 
 userController.loginGuarantee, catchErrors(storeController.editStore))
 
 router.get('/tags', catchErrors(storeController.getPostByTag))
