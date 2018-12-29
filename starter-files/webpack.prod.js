@@ -6,6 +6,7 @@ const webpack = require('webpack');
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 /*
   webpack sees every file as a module.
@@ -48,8 +49,16 @@ const styles = {
   // remember above we used an object for each loader instead of just a string?
   // We don't just pass an array of loaders, we run them 
   // through the extract plugin so they can be outputted to their own .css file
-  // use: ExtractTextPlugin.extract(['css-loader?sourceMap', postcss, 'sass-loader?sourceMap'])
-  use: ['css-loader', 'sass-loader']
+  use: [
+    {
+      loader: MiniCssExtractPlugin.loader,
+    },
+    {
+      loader: "css-loader",
+      options: { url: false }
+    }, 
+    'sass-loader'
+  ]
 };
 
 
@@ -80,7 +89,13 @@ const config = {
   plugins: [
     // here is where we tell it to output our css to a separate file
     // new ExtractTextPlugin('style.css'),
-    new BundleAnalyzerPlugin()
+    // here is where we tell it to output our css to a separate file
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: "style.css"
+    }),
+    new BundleAnalyzerPlugin(),
   ]
 };
 // webpack is cranky about some packages using a soon to be deprecated API. shhhhhhh

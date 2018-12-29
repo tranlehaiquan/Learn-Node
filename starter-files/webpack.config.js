@@ -3,20 +3,13 @@
 */
 const path = require('path');
 const webpack = require('webpack');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+
 /*
   webpack sees every file as a module.
   How to handle those files is up to loaders.
   We only have a single entry point (a .js file) and everything is required from that js file
 */
-
-const eslint = {
-  enforce: "pre",
-  test: /\.js$/,
-  exclude: /node_modules/,
-  loader: "eslint-loader",
-}
 
 // This is our JavaScript rule that specifies what to do with .js files
 const javascript = {
@@ -40,12 +33,14 @@ const postcss = {
 // this is our sass/css loader. It handles files that are require('something.scss')
 const styles = {
   test: /\.(scss)$/,
-  // here we pass the options as query params b/c it's short.
-  // remember above we used an object for each loader instead of just a string?
-  // We don't just pass an array of loaders, we run them 
-  // through the extract plugin so they can be outputted to their own .css file
-  // use: ExtractTextPlugin.extract(['css-loader?sourceMap', postcss, 'sass-loader?sourceMap'])
-  use: ['css-loader', 'sass-loader']
+  use: [
+    'style-loader', 
+    {
+      loader: "css-loader",
+      options: { url: false }
+    }, 
+    'sass-loader'
+  ]
 };
 
 
@@ -74,8 +69,6 @@ const config = {
   // finally we pass it an array of our plugins - uncomment if you want to uglify
   // plugins: [uglify]
   plugins: [
-    // here is where we tell it to output our css to a separate file
-    // new ExtractTextPlugin('style.css'),
   ]
 };
 // webpack is cranky about some packages using a soon to be deprecated API. shhhhhhh
