@@ -17,7 +17,10 @@ export default class SearchItem extends Component {
     const { item, isSelect } = this.props;
 
     return (
-      <a href={`/store/${item.slug}`} className={classnames('search__result', isSelect && 'search__result--active')}>
+      <a 
+        href={`/store/${item.slug}`} 
+        className={classnames('search__result', isSelect && 'search__result--active')}
+      >
         <strong>{item.name}</strong>
       </a>
     );

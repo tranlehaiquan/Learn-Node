@@ -62,7 +62,7 @@ exports.getStore = async (req, res, next) => {
   const {slug} = req.params
   const store = await Store.findOne({slug}).populate('author');
 
-  if (!store) return next()
+  if (!store) return next();
 
   res.render('store', {title: `${store.name}`, store})
 }
@@ -123,6 +123,30 @@ exports.searchStore = async (req, res) => {
     score: { $meta: 'textScore' }
   })
   // limit to only 5 results
-  .limit(5);
+  .limit(5)
+  .select('slug name');
+
   res.json(stores);
+}
+
+exports.mapStores = async (req, res) => {
+  const { lat, lng } = req.query;
+  const q = {
+    location: {
+      $near: {
+        $geometry: {
+          type: 'Point',
+          coordinates: [lng, lat]
+        },
+        $maxDistance: 10000
+      }
+    }
+  };
+
+  const stores = await Store.find(q).select('slug name description location photo').limit(10);
+  res.json(stores);
+}
+
+exports.mapPage = (req, res) => {
+  res.render('map', {title: 'Find shop'});
 }

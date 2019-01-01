@@ -48,5 +48,8 @@ router.get('/account/reset/:token', userController.resetPasswordPage);
 router.post('/account/reset', userController.resetPasswordValidation , catchErrors(userController.updatePassword));
 
 router.get('/search', catchErrors(storeController.searchStore));
+
+router.get('/map', storeController.mapPage);
+router.get('/mapStores', catchErrors(storeController.mapStores));
 module.exports = router
 

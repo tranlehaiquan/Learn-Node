@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  .inner
+    h2= title
+
+    .map
+      .autocomplete
+      input#suggest_location.autocomplete__input(type="text" placeholder="Search..." name="geolocate")
+      
+      #map_shop(style="height: 600px")
+        p Loading...
+block scripts
+  script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)
+  script(src="/dist/App.bundle.js")
