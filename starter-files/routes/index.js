@@ -3,6 +3,8 @@ const router = express.Router();
 const storeController = require('../controllers/store');
 const userController = require('../controllers/user');
 const { catchErrors } = require('../handlers/errorHandlers');
+const React = require('react');
+const reactDOMServer = require('react-dom/server');
 
 // Do work here`
 router.get('/', storeController.getStores)
@@ -51,5 +53,24 @@ router.get('/search', catchErrors(storeController.searchStore));
 
 router.get('/map', storeController.mapPage);
 router.get('/mapStores', catchErrors(storeController.mapStores));
+
+class Heading extends React.Component {
+  render() {
+    return React.createElement("h1", null, this.props.children);
+  }
+}
+
+router.get('/test', (req, res) => {
+  // Send the start of your HTML to the browser
+  res.write('<html><head><title>Page</title></head><body><div id="root">');
+
+  const componentStream = reactDOMServer.renderToNodeStream(React.createElement(Heading, null, "abc</br>abc"));
+
+  componentStream.pipe(res, { end: 'false' });
+  componentStream.on('end', () => {
+    res.end('</div></body></html>');
+  });
+});
+
 module.exports = router
 

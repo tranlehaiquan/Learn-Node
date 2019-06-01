@@ -2,8 +2,6 @@
   Okay folks, want to learn a little bit about webpack?
 */
 const path = require('path');
-const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 
 /*
   webpack sees every file as a module.
@@ -16,18 +14,6 @@ const javascript = {
   test: /\.(js|jsx)$/,
   exclude: /node_modules/,
   use: ["babel-loader", "eslint-loader"]
-};
-
-/*
-  This is our postCSS loader which gets fed into the next loader. 
-  I'm setting it up in it's own variable because its a didgeridog
-*/
-
-const postcss = {
-  loader: 'postcss-loader',
-  options: {
-    plugins() { return [autoprefixer({ browsers: 'last 3 versions' })]; }
-  }
 };
 
 // this is our sass/css loader. It handles files that are require('something.scss')
